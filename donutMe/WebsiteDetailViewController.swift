@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import SafariServices
 
-class WebsiteDetailViewController: UIViewController {
+class WebsiteDetailViewController: UIViewController, UIWebViewDelegate {
+    
+    @IBOutlet weak var Active: UIActivityIndicatorView!
+    @IBOutlet weak var webView: UIWebView!
+    
     
     var website: Website? {
         didSet {
@@ -16,31 +21,38 @@ class WebsiteDetailViewController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        Active.startAnimating()
+        Active.color = UIColor(red: 155.0, green: 196.0, blue: 243.0, alpha: 100.0)
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        Active.stopAnimating()
+        Active.color = UIColor(red: 155.0, green: 196.0, blue: 243.0, alpha: 100.0)
+    }
+    
     func updateViews() {
+        guard let website = website, self.isViewLoaded else { return }
+        
+        title = website.name
+        
+        websiteViews()
         
     }
 
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func websiteViews() {
+        guard let website = website?.websiteName else { return }
+        guard let url = URL(string: website) else { return }
+        let safariVC = SFSafariViewController(url: url as URL)
+        present(safariVC, animated: true, completion: nil)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+    

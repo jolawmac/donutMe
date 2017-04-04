@@ -29,12 +29,12 @@ class DonutListTableViewController: UITableViewController {
         let donut = DonutListController.donutList[indexPath.row]
         cell.donut = donut
     
+        cell.donutImageView.layer.cornerRadius = 10
         
+        cell.layer.borderColor = UIColor(colorLiteralRed: 142.0 / 255.0, green: 141.0 / 255.0, blue: 144.0 / 255.0, alpha: 1.0).cgColor
+        cell.layer.borderWidth = 2
+        cell.layer.cornerRadius = 10
         
-        
-//        cell.textLabel?.text = donut.name
-//        cell.imageView?.contentMode = .scaleAspectFill
-//        cell.imageView?.image = UIImage(named: donut.imageName)
         
         return cell
     }

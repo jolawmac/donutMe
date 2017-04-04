@@ -12,8 +12,8 @@ class WebsiteTableViewCell: UITableViewCell {
     
     @IBOutlet weak var websiteNameLabel: UILabel!
     @IBOutlet weak var websiteDetailTextView: UITextView!
-
-
+    
+    
     var website: Website? {
         didSet {
             updateViews()
@@ -23,7 +23,7 @@ class WebsiteTableViewCell: UITableViewCell {
     func updateViews() {
         guard let website = self.website else { return }
         self.websiteNameLabel.text = website.name
-        //self.websiteDetailTextView.text =
+        self.websiteDetailTextView.text = website.webDescription
     }
     
 }

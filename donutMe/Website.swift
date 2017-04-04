@@ -12,12 +12,12 @@ import Foundation
 class Website {
     
     var name: String
-    var website: String
+    var websiteName: String
     var webDescription: String
     
-    init(name: String, website: String, webDescription: String) {
+    init(name: String, websiteName: String, webDescription: String) {
         self.name = name
-        self.website = website
+        self.websiteName = websiteName
         self.webDescription = webDescription
     }
     

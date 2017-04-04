@@ -23,7 +23,7 @@ class DonutTableViewCell: UITableViewCell {
     func updateView() {
         guard let donut = self.donut else {return}
         self.donutImageView.image = UIImage(named: donut.imageName)
-        self.donutImageView.layer.cornerRadius = 5.0
+        self.donutImageView.layer.cornerRadius = 10.0
         self.nameLabel.text = donut.name
     }
  

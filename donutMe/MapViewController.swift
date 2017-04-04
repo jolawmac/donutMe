@@ -35,11 +35,8 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
     @IBAction func pinkDonutButtonTapped(_ sender: Any) {
         
         let locationCoordinate = mapView.centerCoordinate
-        
-        let annotations = self.mapView.annotations
-        
+    
         initialSearchWith(locationCoordinate: locationCoordinate)
-        self.mapView.removeAnnotations(annotations)
         
         welcomeAlert(animated: true)
         
@@ -187,8 +184,7 @@ extension MapViewController : CLLocationManagerDelegate {
         
         if locations.count == 1, hasMadeInitialSearch == false {
             hasMadeInitialSearch = true
-            self.initialSearchWith(locationCoordinate: location.coordinate)
-        }
+            self.initialSearchWith(locationCoordinate: location.coordinate)}
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -212,6 +208,8 @@ extension MapViewController : CLLocationManagerDelegate {
             
             for item in response.mapItems {
                 
+                var found: Bool = false
+                
                 let placemark = item.placemark
                 
                 let annotation = MKPointAnnotation()
@@ -225,8 +223,18 @@ extension MapViewController : CLLocationManagerDelegate {
                     
                 }
                 
+                for pin in self.mapView.annotations {
+                    guard let annotationTitle = annotation.title, let pinTitle = pin.title else { return }
+                    if pinTitle == annotationTitle {
+                        found = true
+                    }
+                }
+                
+                if found == false {
+                    self.mapView.addAnnotation(annotation)
+                }
             
-                self.mapView.addAnnotation(annotation)
+                // self.mapView.addAnnotation(annotation)
                 //                let span = MKCoordinateSpanMake(0.05, 0.05)
                 //                let region = MKCoordinateRegionMake(placemark.coordinate, span)
                 //                self.mapView.setRegion(region, animated: true)
