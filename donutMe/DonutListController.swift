@@ -28,7 +28,7 @@ class DonutListController {
         
         let creamFilledDoughnut = Donut(name: "Cream-Filled Doughnut", donutInfo: "A douhgnut that has flavored cream in the middle instead of the normal ring shape. The cream is usually a sweet jelly or cream cheese.")
         
-        let doughnutHole = Donut(name: "Doughnut Hole", donutInfo: "Small, round doughnuts usually representing the hole missing from the regular doughnuts. Usually glazed or sugared. The best are chocolate covered sprinkled doughnut holes. Bite size sugay goodness!")
+        let doughnutHole = Donut(name: "Doughnut Holes", donutInfo: "Small, round doughnuts usually representing the hole missing from the regular doughnuts. Usually glazed or sugared. The best are chocolate covered sprinkled doughnut holes. Bite size sugay goodness!")
         
         let appleFritter = Donut(name: "Apple Fritter", donutInfo: "The apple fritter is usually made by tossing apple chunks into the doughnut batter. Usually irregularly shaped and glazed. Sometimes they may contain nuts or sugar and cinnamon on top.")
         
@@ -38,7 +38,9 @@ class DonutListController {
         
         let eclair = Donut(name: "Eclair", donutInfo: "An eclair is a pastry that's usually filled with a cream with a sweet topping such as chocolate.")
         
-        return [doughnut, yeastDonut, cake, oldFashionedDonut, chocolateGlazed, powderedDoughnut, chocolateDoughnut, creamFilledDoughnut, doughnutHole, appleFritter, bostonCreme, blueberry, eclair]
+        let chocolateCakeGlazed = Donut(name: "Chocolate Cake Glazed", donutInfo: "The chocolate cake glazed donut is made from a cake-like batter with chocolate flavor added in finished off with a glazed topping. ")
+        
+        return [doughnut, yeastDonut, cake, oldFashionedDonut, chocolateGlazed, powderedDoughnut, chocolateDoughnut, creamFilledDoughnut, doughnutHole, appleFritter, bostonCreme, blueberry, eclair, chocolateCakeGlazed]
     }
     
 }

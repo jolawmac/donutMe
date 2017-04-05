@@ -30,6 +30,7 @@ class DonutListTableViewController: UITableViewController {
         cell.donut = donut
     
         cell.donutImageView.layer.cornerRadius = 10
+        cell.donutImageView.clipsToBounds = true
         
         cell.layer.borderColor = UIColor(colorLiteralRed: 142.0 / 255.0, green: 141.0 / 255.0, blue: 144.0 / 255.0, alpha: 1.0).cgColor
         cell.layer.borderWidth = 2

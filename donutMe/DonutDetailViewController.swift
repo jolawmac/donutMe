@@ -30,8 +30,11 @@ class DonutDetailViewController: UIViewController {
         
         title = donut.name
         donutImageView.image = UIImage(named: donut.imageName)
+        donutImageView.layer.cornerRadius = 10
+        donutImageView.clipsToBounds = true 
         donutNameLabel.text = donut.name
         donutDetailTextView.text = donut.donutInfo
+
     }
     
     
