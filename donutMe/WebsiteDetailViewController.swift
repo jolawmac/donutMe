@@ -10,9 +10,16 @@ import UIKit
 
 class WebsiteDetailViewController: UIViewController, UIWebViewDelegate {
     
-   // @IBOutlet weak var Active: UIActivityIndicatorView!
+    // @IBOutlet weak var Active: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.webView.goBack()
+    }
+    
+    @IBAction func forwardButtonTapped(_ sender: Any) {
+        self.webView.goForward()
+    }
     
     var website: Website?
     
@@ -33,6 +40,7 @@ class WebsiteDetailViewController: UIViewController, UIWebViewDelegate {
 //    }
     
     func updateViews() {
+        
         guard let website = website, self.isViewLoaded else { return }
         
         title = website.name

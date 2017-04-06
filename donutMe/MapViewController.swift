@@ -286,6 +286,7 @@ extension MapViewController : MKMapViewDelegate {
         // Set pin design here:
         pinView?.pinTintColor = UIColor.red
         pinView?.canShowCallout = true
+        //pinView?.animatesDrop = true
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
         button.setBackgroundImage(UIImage(named: "MapCar"), for: UIControlState())
