@@ -193,57 +193,72 @@ extension MapViewController : CLLocationManagerDelegate {
     
     func initialSearchWith(locationCoordinate: CLLocationCoordinate2D) {
         
-        let request = MKLocalSearchRequest()
-//        let currentLocation = locationManager.location
-        
+//        let request = MKLocalSearchRequest()
+        // change search region here:
         let region = MKCoordinateRegion(center: locationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        request.naturalLanguageQuery = "Donuts"
-        request.region = region
-        let search = MKLocalSearch(request: request)
-        // executes query and returns a MKLocalSearchResponse object which contains an array of mapItems that are then stashed into placeholder
-        search.start { response, _ in
-            guard let response = response else {
-                return
-            }
+        
+        let searchTerms: [String] = ["donuts", "donut", "krispy kreme", "pastry", "dunkin donuts", "doughnuts", "doughnut", "pastries"]
+        let group = DispatchGroup()
+        
+        for searchTerm in searchTerms {
+            group.enter()
             
-            for item in response.mapItems {
+            let request = MKLocalSearchRequest()
+            
+            request.naturalLanguageQuery = searchTerm
+            request.region = region
+            let search = MKLocalSearch(request: request)
+            // executes query and returns a MKLocalSearchResponse object which contains an array of mapItems that are then stashed into placeholder
+            search.start { response, _ in
+                guard let response = response else {
+                    group.leave()
+                    return
+                }
                 
-                var found: Bool = false
-                
-                let placemark = item.placemark
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = placemark.coordinate
-                annotation.title = placemark.name
-                
-                if let city = placemark.locality,
-                    let state = placemark.administrativeArea {
-                    annotation.subtitle = "\(city) \(state)"
-                    item.name = city
+                for item in response.mapItems {
+                    
+                    var found: Bool = false
+                    
+                    let placemark = item.placemark
+                    
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = placemark.coordinate
+                    annotation.title = placemark.name
+                    
+                    if let city = placemark.locality,
+                        let state = placemark.administrativeArea {
+                        annotation.subtitle = "\(city) \(state)"
+                        item.name = city
+                        
+                    }
+                    
+                    for pin in self.mapView.annotations {
+                        guard let annotationTitle = annotation.title, let pinTitle = pin.title else { return }
+                        if pinTitle == annotationTitle {
+                            found = true
+                        }
+                    }
+                    
+                    if found == false {
+                        self.mapView.addAnnotation(annotation)
+                    }
+                    
+                    // self.mapView.addAnnotation(annotation)
+                    //                let span = MKCoordinateSpanMake(0.05, 0.05)
+                    //                let region = MKCoordinateRegionMake(placemark.coordinate, span)
+                    //                self.mapView.setRegion(region, animated: true)
+                    
+                    
                     
                 }
-                
-                for pin in self.mapView.annotations {
-                    guard let annotationTitle = annotation.title, let pinTitle = pin.title else { return }
-                    if pinTitle == annotationTitle {
-                        found = true
-                    }
-                }
-                
-                if found == false {
-                    self.mapView.addAnnotation(annotation)
-                }
-            
-                // self.mapView.addAnnotation(annotation)
-                //                let span = MKCoordinateSpanMake(0.05, 0.05)
-                //                let region = MKCoordinateRegionMake(placemark.coordinate, span)
-                //                self.mapView.setRegion(region, animated: true)
-                
-                
-                
-                
+                group.leave()
             }
         }
+        
+        group.notify(queue: DispatchQueue.main) {
+            print("Finished")
+        }
+        
     }
 }
 
@@ -286,6 +301,7 @@ extension MapViewController : MKMapViewDelegate {
         // Set pin design here:
         pinView?.pinTintColor = UIColor.red
         pinView?.canShowCallout = true
+        pinView?.animatesDrop = true 
         //pinView?.animatesDrop = true
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
